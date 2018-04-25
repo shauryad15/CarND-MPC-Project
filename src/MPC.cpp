@@ -4,7 +4,7 @@
 #include "Eigen-3.3/Eigen/Core"
 
 using CppAD::AD;
-size_t N = 15;
+size_t N = 10;
 double dt = 0.1;
 
 // This value assumes the model presented in the classroom is used.
@@ -108,8 +108,11 @@ class FG_eval {
       AD<double> delta0 = vars[delta_start + t - 1];
       AD<double> a0 = vars[a_start + t - 1];
 
-      AD<double> f0 = coeffs[0] + coeffs[1] * x0;
-      AD<double> psides0 = CppAD::atan(coeffs[1]);
+	  
+	  AD<double> f0 = coeffs[0] + coeffs[1] * x0 + coeffs[2]*pow(x0,2) + coeffs[3]*pow(x0,3);
+
+      AD<double> psides0 = CppAD::atan(coeffs[1] + 2*coeffs[2]*x0 + 3*coeffs[3]*pow(x0,2));
+
 
       // Here's `x` to get you started.
       // The idea here is to constraint this value to be 0.
